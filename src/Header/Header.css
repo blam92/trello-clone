@@ -1,0 +1,23 @@
+.header {
+  background-color: #222;
+  height: 100px;
+  padding: 20px;
+  color: white;
+
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "title button";
+  align-items: center;
+}
+
+#title {
+  font-size: 1.5em;
+  grid-area: title;
+  margin-left: 150px;
+}
+
+header > button {
+  grid-area: button;
+  width: 100px;
+}

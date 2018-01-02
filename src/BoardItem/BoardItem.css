@@ -1,0 +1,46 @@
+.board-item {
+  flex: 0 0 30%;
+  height: 20vh;
+  width: 50vh;
+  margin: 15px 1%;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "board-header"
+                       "board-description";
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.board-header {
+  grid-area: board-header;
+  background-color: #009688;
+  width: 100%;
+  padding-top: 5px;
+}
+
+#board-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+}
+
+#board-description {
+  grid-area: board-description;
+  font-size: 1.2em;
+  color: #212121;
+  background-color: #FFFFFF;
+  margin: 0px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
