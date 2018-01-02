@@ -3,12 +3,13 @@ import './App.css';
 import Header from './Header/Header';
 import BoardContainer from './BoardContainer/BoardContainer';
 import Modal from './Modal/Modal';
+import BoardDetails from './BoardDetails/BoardDetails';
 
 let boards = [
-  {title: 'Code Review', description: 'Board for all code related stuff'},
-  {title: 'Design', description: 'Design priorities'},
-  {title: 'Upcoming Sprint', description: 'Backlog of upcoming features'},
-  {title: 'Maintenance', description: 'To do technical tasks'}
+  {id: 0, title: 'Code Review', description: 'Board for all code related stuff'},
+  {id: 1, title: 'Design', description: 'Design priorities'},
+  {id: 2, title: 'Upcoming Sprint', description: 'Backlog of upcoming features'},
+  {id: 3, title: 'Maintenance', description: 'To do technical tasks'}
 ]
 
 class App extends Component {
@@ -30,7 +31,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <BoardContainer boards={this.state.boards}/>
+        {/* <BoardContainer boards={this.state.boards}/> */}
+        <BoardDetails />
         <Modal addBoard={this.addBoard}/>
       </div>
     );

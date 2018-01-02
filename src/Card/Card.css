@@ -1,0 +1,35 @@
+.card-list {
+  flex: 0 0 22%;
+  width: 40vh;
+  margin: 15px 1%;
+  background-color: white;
+  padding-bottom: 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-list > hr {
+  border-width: 3px;
+}
+
+.card-list > p {
+  flex: 0 0 90%;
+  font-size: 1.2em;
+  padding-top: 5px;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: bold;
+}
+
+.card-list .form-control {
+  flex: 0 0 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 30px;
+}
+
+.item {
+  background-color: #B2DFDB;
+  font-weight: 100;
+}

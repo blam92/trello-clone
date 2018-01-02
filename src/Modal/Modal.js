@@ -7,6 +7,9 @@ let Modal = (props) => {
       title: this.nameNode.value,
       description: this.descNode.value
     };
+    this.nameNode.value = '';
+    this.descNode.value = '';
+    
     props.addBoard(board);
   }
 

@@ -1,0 +1,10 @@
+.lists-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.detail-header {
+  display: flex;
+  flex-wrap: wrap;
+}
