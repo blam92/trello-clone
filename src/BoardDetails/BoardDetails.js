@@ -20,6 +20,7 @@ class BoardDetails extends Component {
     }
 
     this.addItem = this.addItem.bind(this);
+    this.addList = this.addList.bind(this);
   }
 
   addItem(textValue, index) {
@@ -27,6 +28,13 @@ class BoardDetails extends Component {
     newCards[index].items = newCards[index].items.concat([textValue]);
     this.setState({
       cards: newCards
+    });
+  }
+
+  addList(cardTitle) {
+    let newCard = {title: cardTitle, items: []};
+    this.setState({
+      cards: this.state.cards.concat([newCard])
     });
   }
 
@@ -38,7 +46,7 @@ class BoardDetails extends Component {
       <div>
         <div className="detail-header"> 
           <BoardItem boardData={fakeItem}/>
-          <AddListCard/>
+          <AddListCard addFunction={this.addList}/>
         </div>
         <div className="lists-container">
           {cards}

@@ -1,0 +1,9 @@
+.add-list-card  > .card-list {
+  background-color: #8BC34A;
+}
+
+.add-list-card .item {
+  background-color: #DCEDC8;
+  font-size: 0.9em;
+  padding: 5px 0;
+}
