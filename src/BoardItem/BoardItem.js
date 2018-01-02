@@ -7,12 +7,13 @@ class BoardItem extends Component {
   }
 
   render() {
+    let board = this.props.boardData;
     return (
       <div className="board-item card">
         <div className="board-header">
-          <p id="board-name">BoardName</p>
+          <p id="board-name">{board.title}</p>
         </div>
-        <p id="board-description">This board is about something really interesting</p>
+        <p id="board-description">{board.description}</p>
       </div>
     );
   }

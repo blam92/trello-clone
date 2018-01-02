@@ -1,0 +1,16 @@
+.modal-header {
+  background-color: #009688;
+  color: white;
+}
+
+.modal-body {
+  margin: 5px 5px;
+}
+
+.modal-body > p {
+  margin-top: 10px;
+}
+
+.modal-footer > .btn-primary {
+  background-color: #00796B;
+}

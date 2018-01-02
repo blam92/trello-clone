@@ -8,14 +8,13 @@ class BoardContainer extends Component {
   }
 
   render() {
+    let boardItems = this.props.boards.map((item, index) => {
+      return <BoardItem key={index} boardData={item}/>;
+    });
+
     return (
       <div className="board-container">
-        <BoardItem/>
-        <BoardItem/>
-        <BoardItem/>
-        <BoardItem/>
-        <BoardItem/>
-        <BoardItem/>
+        {boardItems}
       </div>
     );
   }
