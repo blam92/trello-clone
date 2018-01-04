@@ -4,12 +4,41 @@ import Header from './Header/Header';
 import BoardContainer from './BoardContainer/BoardContainer';
 import Modal from './Modal/Modal';
 import BoardDetails from './BoardDetails/BoardDetails';
+import _ from 'underscore';
 
 let boards = [
-  {id: 0, title: 'Code Review', description: 'Board for all code related stuff'},
-  {id: 1, title: 'Design', description: 'Design priorities'},
-  {id: 2, title: 'Upcoming Sprint', description: 'Backlog of upcoming features'},
-  {id: 3, title: 'Maintenance', description: 'To do technical tasks'}
+  {id: 0, title: 'Code Review', description: 'Board for all code related stuff', 
+  cards: [
+    {title: 'Front-end', items: ['Head component', 'do another thing', 'onClick']}, 
+    {title: 'Back-end', items: ['Set express', 'Set routers']},
+    {title: 'Database', items: ['Set schema', 'Set mongoose', 'Get DB provider']},
+    {title: 'UX', items: ['CSS styling', 'Animations', 'Logo']}
+    ]
+  },
+  {id: 1, title: 'Design', description: 'Design priorities', 
+  cards: [
+    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
+    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
+    ]
+  },
+  {id: 2, title: 'Upcoming Sprint', description: 'Backlog of upcoming features',
+  cards: [
+    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
+    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
+    ]
+  },
+  {id: 3, title: 'Maintenance', description: 'To do technical tasks',
+  cards: [
+    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
+    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
+    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
+    ]
+  }
 ]
 
 class App extends Component {
@@ -19,6 +48,7 @@ class App extends Component {
       boards: boards
     }
     this.addBoard = this.addBoard.bind(this);
+    this.addList = this.addList.bind(this);
   }
 
   addBoard(board) {
@@ -27,12 +57,28 @@ class App extends Component {
     });
   }
 
+  addList(boardId, cardTitle) {
+    let newCard = {title: cardTitle, items: []};
+    let newBoards = this.state.boards.slice();
+
+    let boardIndex = _.findIndex(newBoards, (board) => board.id === boardId);
+    newBoards[boardIndex].cards.push(newCard);
+    this.setState({
+      boards: newBoards
+    });
+  }
+
+  addItem(boardIndex, cardIndex, itemIndex) {
+
+  }
+
   render() {
+
     return (
       <div className="App">
         <Header />
-        {/* <BoardContainer boards={this.state.boards}/> */}
-        <BoardDetails />
+        <BoardContainer boards={this.state.boards}/>
+        <BoardDetails board={this.state.boards[0]} addList={this.addList} />
         <Modal addBoard={this.addBoard}/>
       </div>
     );

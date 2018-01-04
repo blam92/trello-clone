@@ -11,7 +11,6 @@ let cards = [
   {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
 ]
 
-let fakeItem = {id: 3, title: 'Maintenance', description: 'To do technical tasks'}
 class BoardDetails extends Component {
   constructor(props) {
     super(props);
@@ -32,20 +31,17 @@ class BoardDetails extends Component {
   }
 
   addList(cardTitle) {
-    let newCard = {title: cardTitle, items: []};
-    this.setState({
-      cards: this.state.cards.concat([newCard])
-    });
+    this.props.addList(this.props.board.id, cardTitle);
   }
 
   render() {
-    let cards = this.state.cards.map((card, i) => {
+    let cards = this.props.board.cards.map((card, i) => {
       return <Card cardData={card} key={i} index={i} addFunction={this.addItem}/>;
     });
     return (
       <div>
         <div className="detail-header"> 
-          <BoardItem boardData={fakeItem}/>
+          <BoardItem boardData={this.props.board}/>
           <AddListCard addFunction={this.addList}/>
         </div>
         <div className="lists-container">

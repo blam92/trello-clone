@@ -5,7 +5,10 @@ let Modal = (props) => {
   let createBoard = () => {
     let board = {
       title: this.nameNode.value,
-      description: this.descNode.value
+      description: this.descNode.value,
+      cards: [
+        {title: 'Your first card', items: ['Add items by just typing above and pressing enter!']}
+      ]
     };
     this.nameNode.value = '';
     this.descNode.value = '';
