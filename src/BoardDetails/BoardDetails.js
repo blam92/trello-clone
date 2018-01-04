@@ -27,7 +27,7 @@ class BoardDetails extends Component {
     return (
       <div>
         <div className="detail-header"> 
-          <BoardItem boardData={this.props.board}/>
+          <BoardItem boardData={this.props.board} onBoardSelected={() => null}/>
           <AddListCard addFunction={this.addList}/>
         </div>
         <div className="lists-container">

@@ -4,9 +4,19 @@ import BoardItem from '../BoardItem/BoardItem';
 
 class BoardContainer extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.onBoardSelected = this.onBoardSelected.bind(this);
+  }
+
+  onBoardSelected(boardId) {
+    this.props.selectBoard(boardId);
+  }
+
   render() {
     let boardItems = this.props.boards.map((item, index) => {
-      return <BoardItem key={index} boardData={item}/>;
+      return <BoardItem key={index} boardData={item} onBoardSelected={this.onBoardSelected}/>;
     });
 
     return (

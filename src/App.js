@@ -45,11 +45,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: boards
+      boards: boards,
+      selectedBoard: -1
     }
     this.addBoard = this.addBoard.bind(this);
     this.addList = this.addList.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.selectBoard = this.selectBoard.bind(this);
+    this.selectHeader = this.selectHeader.bind(this);
   }
 
   addBoard(board) {
@@ -75,17 +78,38 @@ class App extends Component {
 
     newBoards[boardIndex].cards[cardIndex].items.push(textValue);
     this.setState({
-      boards: newBoards
+      boards: newBoards,
+      selectBoard: -1
+    });
+  }
+
+  selectBoard(boardId) {
+    let boardIndex = _.findIndex(this.state.boards, (board) => board.id === boardId);
+
+    this.setState({
+      selectedBoard: boardIndex
+    });
+  }
+
+  selectHeader() {
+    this.setState({
+      selectedBoard: -1
     });
   }
 
   render() {
-    console.log(this.state.boards[0]);
+    let mainComponent;
+    if(this.state.selectedBoard === -1) {
+      mainComponent = <BoardContainer boards={this.state.boards} selectBoard={this.selectBoard}/>;
+    } else {
+      mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} addList={this.addList} addItem={this.addItem}/>
+    }
+
+    console.log(mainComponent);
     return (
       <div className="App">
-        <Header />
-        <BoardContainer boards={this.state.boards}/>
-        <BoardDetails board={this.state.boards[0]} addList={this.addList} addItem={this.addItem}/>
+        <Header selectHeader={this.selectHeader}/>
+        {mainComponent}
         <Modal addBoard={this.addBoard}/>
       </div>
     );
