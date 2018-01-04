@@ -4,30 +4,16 @@ import BoardItem from '../BoardItem/BoardItem';
 import Card from '../Card/Card';
 import AddListCard from '../AddListCard/AddListCard';
 
-let cards = [
-  {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
-  {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
-  {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
-  {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
-]
-
 class BoardDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cards: cards
-    }
 
     this.addItem = this.addItem.bind(this);
     this.addList = this.addList.bind(this);
   }
 
-  addItem(textValue, index) {
-    let newCards = this.state.cards.slice();
-    newCards[index].items = newCards[index].items.concat([textValue]);
-    this.setState({
-      cards: newCards
-    });
+  addItem(textValue, cardIndex) {
+    this.props.addItem(this.props.board.id, cardIndex, textValue);
   }
 
   addList(cardTitle) {

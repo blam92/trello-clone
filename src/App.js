@@ -49,6 +49,7 @@ class App extends Component {
     }
     this.addBoard = this.addBoard.bind(this);
     this.addList = this.addList.bind(this);
+    this.addItem = this.addItem.bind(this);
   }
 
   addBoard(board) {
@@ -68,17 +69,23 @@ class App extends Component {
     });
   }
 
-  addItem(boardIndex, cardIndex, itemIndex) {
+  addItem(boardId, cardIndex, textValue) {
+    let newBoards = this.state.boards.slice();
+    let boardIndex = _.findIndex(newBoards, (board) => board.id === boardId);
 
+    newBoards[boardIndex].cards[cardIndex].items.push(textValue);
+    this.setState({
+      boards: newBoards
+    });
   }
 
   render() {
-
+    console.log(this.state.boards[0]);
     return (
       <div className="App">
         <Header />
         <BoardContainer boards={this.state.boards}/>
-        <BoardDetails board={this.state.boards[0]} addList={this.addList} />
+        <BoardDetails board={this.state.boards[0]} addList={this.addList} addItem={this.addItem}/>
         <Modal addBoard={this.addBoard}/>
       </div>
     );
