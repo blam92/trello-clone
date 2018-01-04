@@ -6,46 +6,11 @@ import Modal from './Modal/Modal';
 import BoardDetails from './BoardDetails/BoardDetails';
 import _ from 'underscore';
 
-let boards = [
-  {id: 0, title: 'Code Review', description: 'Board for all code related stuff', 
-  cards: [
-    {title: 'Front-end', items: ['Head component', 'do another thing', 'onClick']}, 
-    {title: 'Back-end', items: ['Set express', 'Set routers']},
-    {title: 'Database', items: ['Set schema', 'Set mongoose', 'Get DB provider']},
-    {title: 'UX', items: ['CSS styling', 'Animations', 'Logo']}
-    ]
-  },
-  {id: 1, title: 'Design', description: 'Design priorities', 
-  cards: [
-    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
-    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
-    ]
-  },
-  {id: 2, title: 'Upcoming Sprint', description: 'Backlog of upcoming features',
-  cards: [
-    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
-    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
-    ]
-  },
-  {id: 3, title: 'Maintenance', description: 'To do technical tasks',
-  cards: [
-    {title: 'Monday', items: ['do something', 'do another thing', 'laundry']}, 
-    {title: 'Tuesday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Thursday', items: ['do something', 'do another thing', 'laundry']},
-    {title: 'Friday', items: ['do something', 'do another thing', 'laundry']}
-    ]
-  }
-]
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: boards,
+      boards: [],
       selectedBoard: -1
     }
     this.addBoard = this.addBoard.bind(this);
@@ -55,9 +20,24 @@ class App extends Component {
     this.selectHeader = this.selectHeader.bind(this);
   }
 
+  componentDidMount() {
+    var options = { method: 'GET',
+               contentType: 'application/json',
+               mode: 'cors',
+               cache: 'default' };
+
+    fetch("https://d3bb818c-648e-48b7-8e8a-9cd44caf79f5.mock.pstmn.io/boards", options)
+    .then((response) => response.json())
+    .then((boards) => {
+      this.setState({
+        boards: boards
+      });
+    });
+  }
+
   addBoard(board) {
     this.setState({
-      boards: boards.concat([board])
+      boards: this.state.boards.concat([board])
     });
   }
 
@@ -104,8 +84,7 @@ class App extends Component {
     } else {
       mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} addList={this.addList} addItem={this.addItem}/>
     }
-
-    console.log(mainComponent);
+    
     return (
       <div className="App">
         <Header selectHeader={this.selectHeader}/>
