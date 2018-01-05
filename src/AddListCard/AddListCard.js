@@ -10,7 +10,7 @@ let AddListCard = (props) => {
   
   return (
     <div className="add-list-card">
-      <Card cardData={defaultData} addFunction={props.addFunction}/>
+      <Card cardData={defaultData} addFunction={props.addFunction} addList={true}/>
     </div>
   );
 }

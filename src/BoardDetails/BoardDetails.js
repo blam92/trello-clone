@@ -11,6 +11,7 @@ class BoardDetails extends Component {
     this.addItem = this.addItem.bind(this);
     this.addList = this.addList.bind(this);
     this.deleteBoard = this.deleteBoard.bind(this);
+    this.deleteList = this.deleteList.bind(this);
   }
 
   addItem(textValue, cardIndex) {
@@ -25,9 +26,13 @@ class BoardDetails extends Component {
     this.props.deleteBoard(boardId, true);
   }
 
+  deleteList(listInIndex) {
+    this.props.deleteList(this.props.board._id, listInIndex);
+  }
+
   render() {
     let cards = this.props.board.cards.map((card, i) => {
-      return <Card cardData={card} key={i} index={i} addFunction={this.addItem}/>;
+      return <Card cardData={card} key={i} index={i} addFunction={this.addItem} deleteList={this.deleteList}/>;
     });
     return (
       <div>

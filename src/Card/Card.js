@@ -18,6 +18,7 @@ let Card = (props) => {
 
   return (
     <div className="card card-list">
+      {props.addList ? null: <img id="close-icon" src="/close-icon.png" alt="close" onClick={() => props.deleteList(props.index)}/>}
       <p>{props.cardData.title}</p>
       <input className="card form-control" 
       ref={(node) => nodeInput = node} 
