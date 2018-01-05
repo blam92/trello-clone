@@ -42,7 +42,7 @@ class Card extends Component {
       return <Item text={text} key={i} index={i} myListIndex={this.props.index} sortDraggedItems={this.props.sortDraggedItems}/>;
     });
 
-    const { connectDropTarget, isOver } = this.props;
+    const { connectDropTarget } = this.props;
     
     return connectDropTarget(
       <div className="card card-list">

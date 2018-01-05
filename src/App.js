@@ -29,7 +29,6 @@ class App extends Component {
   }
 
   addBoard(board) {
-    console.log(board);
     this._postPutOrDeleteBoard('POST', board);
   }
 
@@ -138,12 +137,11 @@ class App extends Component {
     .then((boards) => {
       this.setState({
         boards: boards
-      }, console.log(boards));
+      });
     }).catch((err) => console.log('error: ', err));
   }
   
   _postPutOrDeleteBoard(requestMethod, newBoard) {
-    console.log(JSON.stringify(newBoard));
     const options = { 
       method: requestMethod,
       headers: {      
