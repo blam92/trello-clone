@@ -54,6 +54,11 @@ module.exports.addBoardToDB = (board) => {
 module.exports.updateBoardInDB = (board, cb) => {
   Board.findByIdAndUpdate(board._id, board, cb);
 }
+
+module.exports.deleteBoardInDB = (board, cb) => {
+  Board.findByIdAndRemove(board._id, cb);
+}
+
 // testBoard = new Board(bObj);
 // testBoard.save((err, board) => {
 //   if(err) return console.log(err);

@@ -30,6 +30,13 @@ app.put('/api/boards', jsonParser, (req, res) => {
   });
 });
 
+app.delete('/api/boards', jsonParser, (req, res) => {
+  model.deleteBoardInDB(req.body, () => {
+    console.log('deleted!');
+    res.status(204).send('204 deleted.');
+  });
+});
+
 app.listen(process.env.PORT || 4000, () => {
   console.log('Example app listening on port', process.env.PORT || 4000);
 });
