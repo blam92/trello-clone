@@ -7,16 +7,26 @@ let jsonParser = bodyParser.json();
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
+
 app.get('/api/boards', (req, res) => {
-  model.Board.find((err, boards) => {
-    if(err) {
-      console.log(err);
-    } else {
-      console.log('sending reponse');
-      res.status(200).json(boards);
-    }
+  model.getBoardsFromDB().then((boards) => {
+    res.status(200).json(boards);
+  });
+});
+
+app.post('/api/boards', jsonParser, (req, res) => {
+  model.addBoardToDB(req.body).then(() => {
+    res.status(201).send('201 Saved.');
+  });
+});
+
+app.put('/api/boards', jsonParser, (req, res) => {
+  model.updateBoardInDB(req.body, () => {
+    console.log('updated!');
+    res.status(204).send('204 updated');
   });
 });
 
