@@ -6,7 +6,11 @@ import { DropTarget } from 'react-dnd';
 
 const listTarget = {
   drop(props, monitor) {
-    props.dnd(monitor.getItem().listIndex, props.index, monitor.getItem().index);
+    let fromList = monitor.getItem().listIndex;
+    let toList = props.index;
+    if(fromList === toList) return undefined;
+
+    props.dnd(fromList, toList, monitor.getItem().index);
   }
 };
 
