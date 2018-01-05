@@ -19,15 +19,6 @@ let boardSchema = mongoose.Schema({
 
 let Board = mongoose.model('Board', boardSchema);
 
-bObj = {
-  title: 'Test Board',
-  description: 'Testing mongoose',
-  cards: [
-    {title: 'first card', items: ['1', '2']},
-    {title: 'second card', items: ['3', '4']}
-  ]
-}
-
 module.exports.getBoardsFromDB = () => {
   return new Promise((resolve, reject) => {
     Board.find((err, boards) => {
@@ -58,14 +49,3 @@ module.exports.updateBoardInDB = (board, cb) => {
 module.exports.deleteBoardInDB = (board, cb) => {
   Board.findByIdAndRemove(board._id, cb);
 }
-
-// testBoard = new Board(bObj);
-// testBoard.save((err, board) => {
-//   if(err) return console.log(err);
-//   console.log('saved!', board);
-// });
-
-// Board.find((err, boards) => {
-//   if(err) return console.log(err);
-//   console.log('BOARD:', boards);
-// });
