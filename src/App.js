@@ -26,13 +26,14 @@ class App extends Component {
                mode: 'cors',
                cache: 'default' };
 
-    fetch("https://d3bb818c-648e-48b7-8e8a-9cd44caf79f5.mock.pstmn.io/boards", options)
+    
+    fetch('http://127.0.0.1:4000/api/boards', options)
     .then((response) => response.json())
     .then((boards) => {
       this.setState({
         boards: boards
       });
-    });
+    }).catch((err) => console.log('error: ', err));
   }
 
   addBoard(board) {
@@ -84,7 +85,7 @@ class App extends Component {
     } else {
       mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} addList={this.addList} addItem={this.addItem}/>
     }
-    
+
     return (
       <div className="App">
         <Header selectHeader={this.selectHeader}/>
