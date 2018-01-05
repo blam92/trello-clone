@@ -16,6 +16,7 @@ class BoardDetails extends Component {
     this.deleteBoard = this.deleteBoard.bind(this);
     this.deleteList = this.deleteList.bind(this);
     this.dragAndDrop = this.dragAndDrop.bind(this);
+    this.sortDraggedItems = this.sortDraggedItems.bind(this);
   }
 
   addItem(textValue, cardIndex) {
@@ -38,10 +39,14 @@ class BoardDetails extends Component {
     this.props.dnd(this.props.board._id, fromListIndex, toListIndex, draggedItemIndex);
   }
 
+  sortDraggedItems(listIndex, draggedItemIndex, hoveredItemIndex) {
+    this.props.sortDraggedItems(this.props.board._id, listIndex, draggedItemIndex, hoveredItemIndex);
+  }
+
   render() {
     let cards = this.props.board.cards.map((card, i) => {
       return <Card cardData={card} key={i} index={i} addFunction={this.addItem} deleteList={this.deleteList} 
-      dnd={this.dragAndDrop}/>;
+      dnd={this.dragAndDrop} sortDraggedItems={this.sortDraggedItems}/>;
     });
     return (
       <div>

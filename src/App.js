@@ -21,6 +21,7 @@ class App extends Component {
     this.deleteBoard = this.deleteBoard.bind(this);
     this.deleteList = this.deleteList.bind(this);
     this.dragAndDrop = this.dragAndDrop.bind(this);
+    this.sortDraggedItems = this.sortDraggedItems.bind(this);
   }
 
   componentDidMount() {
@@ -88,7 +89,21 @@ class App extends Component {
     newBoards[boardIndex].cards[toListIndex].items.push(draggedItem[0]);
 
     this._postPutOrDeleteBoard('PUT', newBoards[boardIndex]);
-  }  
+  }
+  
+  sortDraggedItems(boardId, listIndex, draggedItemIndex, hoveredItemIndex) {
+    //hovered index is where I want to insert the draggedItem.
+    let newBoards = this.state.boards.slice();
+    let boardIndex = this._findBoardIndex(boardId);
+    let itemsToSort = newBoards[boardIndex].cards[listIndex].items;
+
+    let draggedItem = itemsToSort.splice(draggedItemIndex, 1);
+    itemsToSort.splice(hoveredItemIndex, 0, draggedItem[0]);
+
+    // newBoards[boardIndex].cards[listIndex] = firstPartOfTheList.concat(secondPartOfTheList);
+    this._postPutOrDeleteBoard('PUT', newBoards[boardIndex]);
+
+  }
 
   render() {
     let mainComponent;
@@ -98,7 +113,7 @@ class App extends Component {
     } else {
       mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} 
       addList={this.addList} addItem={this.addItem} deleteBoard={this.deleteBoard}
-      deleteList={this.deleteList} dnd={this.dragAndDrop}/>
+      deleteList={this.deleteList} dnd={this.dragAndDrop} sortDraggedItems={this.sortDraggedItems}/>
     }
     
     return (

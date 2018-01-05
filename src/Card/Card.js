@@ -39,7 +39,7 @@ class Card extends Component {
 
   render() {
     let items = this.props.cardData.items.map((text, i) => {
-      return <Item text={text} key={i} index={i} myListIndex={this.props.index}/>;
+      return <Item text={text} key={i} index={i} myListIndex={this.props.index} sortDraggedItems={this.props.sortDraggedItems}/>;
     });
 
     const { connectDropTarget, isOver } = this.props;
