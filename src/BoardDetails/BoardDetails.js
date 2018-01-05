@@ -10,6 +10,7 @@ class BoardDetails extends Component {
 
     this.addItem = this.addItem.bind(this);
     this.addList = this.addList.bind(this);
+    this.deleteBoard = this.deleteBoard.bind(this);
   }
 
   addItem(textValue, cardIndex) {
@@ -20,6 +21,10 @@ class BoardDetails extends Component {
     this.props.addList(this.props.board._id, cardTitle);
   }
 
+  deleteBoard(boardId) {
+    this.props.deleteBoard(boardId, true);
+  }
+
   render() {
     let cards = this.props.board.cards.map((card, i) => {
       return <Card cardData={card} key={i} index={i} addFunction={this.addItem}/>;
@@ -27,7 +32,7 @@ class BoardDetails extends Component {
     return (
       <div>
         <div className="detail-header"> 
-          <BoardItem boardData={this.props.board} onBoardSelected={() => null}/>
+          <BoardItem boardData={this.props.board} onBoardSelected={() => null} onCloseButtonPress={this.deleteBoard}/>
           <AddListCard addFunction={this.addList}/>
         </div>
         <div className="lists-container">

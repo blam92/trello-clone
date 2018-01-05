@@ -18,6 +18,7 @@ class App extends Component {
     this.addItem = this.addItem.bind(this);
     this.selectBoard = this.selectBoard.bind(this);
     this.selectHeader = this.selectHeader.bind(this);
+    this.deleteBoard = this.deleteBoard.bind(this);
   }
 
   componentDidMount() {
@@ -26,7 +27,7 @@ class App extends Component {
 
   addBoard(board) {
     console.log(board);
-    this._postOrPutBoard('POST', board);
+    this._postPutOrDeleteBoard('POST', board);
   }
 
   addList(boardId, cardTitle) {
@@ -35,7 +36,7 @@ class App extends Component {
 
     let boardIndex = this._findBoardIndex(boardId);
     newBoards[boardIndex].cards.push(newCard);
-    this._postOrPutBoard('PUT', newBoards[boardIndex])
+    this._postPutOrDeleteBoard('PUT', newBoards[boardIndex])
   }
 
   addItem(boardId, cardIndex, textValue) {
@@ -43,7 +44,17 @@ class App extends Component {
     let boardIndex = this._findBoardIndex(boardId);
 
     newBoards[boardIndex].cards[cardIndex].items.push(textValue);
-    this._postOrPutBoard('PUT', newBoards[boardIndex]);
+    this._postPutOrDeleteBoard('PUT', newBoards[boardIndex]);
+  }
+
+  deleteBoard(boardId, userInDetails) {
+    let boardIndex = this._findBoardIndex(boardId);
+    this._postPutOrDeleteBoard('DELETE', this.state.boards[boardIndex]);
+    if(userInDetails) {
+      this.setState({
+        selectedBoard: -1
+      });
+    }
   }
 
   selectBoard(boardId) {
@@ -60,12 +71,32 @@ class App extends Component {
     });
   }
 
+  
+  render() {
+    let mainComponent;
+    if(this.state.selectedBoard === -1) {
+      mainComponent = <BoardContainer boards={this.state.boards} selectBoard={this.selectBoard} deleteBoard={this.deleteBoard}/>;
+    } else {
+      mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} 
+      addList={this.addList} addItem={this.addItem} deleteBoard={this.deleteBoard}/>
+    }
+    
+    return (
+      <div className="App">
+        <Header selectHeader={this.selectHeader}/>
+        {mainComponent}
+        <Modal addBoard={this.addBoard}/>
+      </div>
+    );
+  }
+
+  //REQUEST UTILITY METHODS
   _getBoards() {
     const options = { method: 'GET',
                contentType: 'application/json',
                mode: 'cors',
                cache: 'default' };
-
+  
     
     fetch('http://127.0.0.1:4000/api/boards', options)
     .then((response) => response.json())
@@ -75,8 +106,8 @@ class App extends Component {
       }, console.log(boards));
     }).catch((err) => console.log('error: ', err));
   }
-
-  _postOrPutBoard(requestMethod, newBoard) {
+  
+  _postPutOrDeleteBoard(requestMethod, newBoard) {
     console.log(JSON.stringify(newBoard));
     const options = { 
       method: requestMethod,
@@ -86,34 +117,17 @@ class App extends Component {
       },
       body: JSON.stringify(newBoard)
     };
-
+  
     fetch('http://127.0.0.1:4000/api/boards', options)
     .then((response) => {
       if(!response.ok) return console.log('error', response);
       this._getBoards();
     }).catch((err) => console.log('error: ', err));
   }
-
-
+  
+  
   _findBoardIndex = (boardId) => {
     return _.findIndex(this.state.boards, (board) => board._id === boardId);
-  }
-
-  render() {
-    let mainComponent;
-    if(this.state.selectedBoard === -1) {
-      mainComponent = <BoardContainer boards={this.state.boards} selectBoard={this.selectBoard}/>;
-    } else {
-      mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} addList={this.addList} addItem={this.addItem}/>
-    }
-
-    return (
-      <div className="App">
-        <Header selectHeader={this.selectHeader}/>
-        {mainComponent}
-        <Modal addBoard={this.addBoard}/>
-      </div>
-    );
   }
 }
 
