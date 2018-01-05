@@ -3,6 +3,9 @@ import './BoardDetails.css';
 import BoardItem from '../BoardItem/BoardItem';
 import Card from '../Card/Card';
 import AddListCard from '../AddListCard/AddListCard';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 
 class BoardDetails extends Component {
   constructor(props) {
@@ -48,4 +51,5 @@ class BoardDetails extends Component {
   }
 }
 
-export default BoardDetails;
+// export default BoardDetails;
+export default DragDropContext(HTML5Backend)(BoardDetails);
