@@ -13,11 +13,11 @@ class BoardDetails extends Component {
   }
 
   addItem(textValue, cardIndex) {
-    this.props.addItem(this.props.board.id, cardIndex, textValue);
+    this.props.addItem(this.props.board._id, cardIndex, textValue);
   }
 
   addList(cardTitle) {
-    this.props.addList(this.props.board.id, cardTitle);
+    this.props.addList(this.props.board._id, cardTitle);
   }
 
   render() {

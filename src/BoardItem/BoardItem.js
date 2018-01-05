@@ -6,7 +6,7 @@ class BoardItem extends Component {
   render() {
     let board = this.props.boardData;
     return (
-      <div className="board-item card" onClick={() => this.props.onBoardSelected(board.id)}>
+      <div className="board-item card" onClick={() => this.props.onBoardSelected(board._id)}>
         <div className="board-header">
           <p id="board-name">{board.title}</p>
         </div>

@@ -25,9 +25,8 @@ class App extends Component {
   }
 
   addBoard(board) {
-    this.setState({
-      boards: this.state.boards.concat([board])
-    });
+    console.log(board);
+    this._postOrPutBoard('POST', board);
   }
 
   addList(boardId, cardTitle) {
@@ -36,9 +35,7 @@ class App extends Component {
 
     let boardIndex = this._findBoardIndex(boardId);
     newBoards[boardIndex].cards.push(newCard);
-    this.setState({
-      boards: newBoards
-    });
+    this._postOrPutBoard('PUT', newBoards[boardIndex])
   }
 
   addItem(boardId, cardIndex, textValue) {
@@ -46,10 +43,7 @@ class App extends Component {
     let boardIndex = this._findBoardIndex(boardId);
 
     newBoards[boardIndex].cards[cardIndex].items.push(textValue);
-    this.setState({
-      boards: newBoards,
-      selectBoard: -1
-    });
+    this._postOrPutBoard('PUT', newBoards[boardIndex]);
   }
 
   selectBoard(boardId) {
@@ -78,16 +72,31 @@ class App extends Component {
     .then((boards) => {
       this.setState({
         boards: boards
-      });
+      }, console.log(boards));
     }).catch((err) => console.log('error: ', err));
   }
 
-  _postBoard(boardId) {
+  _postOrPutBoard(requestMethod, newBoard) {
+    console.log(JSON.stringify(newBoard));
+    const options = { 
+      method: requestMethod,
+      headers: {      
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newBoard)
+    };
 
+    fetch('http://127.0.0.1:4000/api/boards', options)
+    .then((response) => {
+      if(!response.ok) return console.log('error', response);
+      this._getBoards();
+    }).catch((err) => console.log('error: ', err));
   }
 
+
   _findBoardIndex = (boardId) => {
-    return _.findIndex(this.state.boards, (board) => board.id === boardId);
+    return _.findIndex(this.state.boards, (board) => board._id === boardId);
   }
 
   render() {
