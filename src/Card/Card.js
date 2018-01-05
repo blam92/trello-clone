@@ -4,16 +4,15 @@ import Item from './Item';
 import { ItemTypes } from './Constants';
 import { DropTarget } from 'react-dnd';
 
-const squareTarget = {
-  drop(props) {
-    
+const listTarget = {
+  drop(props, monitor) {
+    props.dnd(monitor.getItem().listIndex, props.index, monitor.getItem().index);
   }
 };
 
 function collect(connect, monitor) {
   return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
+    connectDropTarget: connect.dropTarget()
   };
 }
 
@@ -36,10 +35,12 @@ class Card extends Component {
 
   render() {
     let items = this.props.cardData.items.map((text, i) => {
-      return <Item text={text} key={i} index={i}/>;
+      return <Item text={text} key={i} index={i} myListIndex={this.props.index}/>;
     });
+
+    const { connectDropTarget, isOver } = this.props;
     
-    return (
+    return connectDropTarget(
       <div className="card card-list">
         {this.props.addList ? null: <img id="close-icon" src="/close-icon.png" alt="close" onClick={() => this.props.deleteList(this.props.index)}/>}
         <p>{this.props.cardData.title}</p>
@@ -51,4 +52,5 @@ class Card extends Component {
     );
   }
 }
-export default Card;
+// export default Card;
+export default DropTarget(ItemTypes.ITEM, listTarget, collect)(Card);

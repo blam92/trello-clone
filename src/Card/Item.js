@@ -7,7 +7,8 @@ import { ItemTypes } from './Constants';
 const ItemSource = {
   beginDrag(props) {
     return {
-      index: props.index
+      index: props.index,
+      listIndex: props.myListIndex
     }
   }
 };

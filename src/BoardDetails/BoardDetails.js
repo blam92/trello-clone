@@ -15,6 +15,7 @@ class BoardDetails extends Component {
     this.addList = this.addList.bind(this);
     this.deleteBoard = this.deleteBoard.bind(this);
     this.deleteList = this.deleteList.bind(this);
+    this.dragAndDrop = this.dragAndDrop.bind(this);
   }
 
   addItem(textValue, cardIndex) {
@@ -33,9 +34,14 @@ class BoardDetails extends Component {
     this.props.deleteList(this.props.board._id, listInIndex);
   }
 
+  dragAndDrop(fromListIndex, toListIndex, draggedItemIndex) {
+    this.props.dnd(this.props.board._id, fromListIndex, toListIndex, draggedItemIndex);
+  }
+
   render() {
     let cards = this.props.board.cards.map((card, i) => {
-      return <Card cardData={card} key={i} index={i} addFunction={this.addItem} deleteList={this.deleteList}/>;
+      return <Card cardData={card} key={i} index={i} addFunction={this.addItem} deleteList={this.deleteList} 
+      dnd={this.dragAndDrop}/>;
     });
     return (
       <div>

@@ -20,6 +20,7 @@ class App extends Component {
     this.selectHeader = this.selectHeader.bind(this);
     this.deleteBoard = this.deleteBoard.bind(this);
     this.deleteList = this.deleteList.bind(this);
+    this.dragAndDrop = this.dragAndDrop.bind(this);
   }
 
   componentDidMount() {
@@ -79,7 +80,16 @@ class App extends Component {
     });
   }
 
-  
+  dragAndDrop(boardId, fromListIndex, toListIndex, draggedItemIndex) {
+    let newBoards = this.state.boards;
+    let boardIndex = this._findBoardIndex(boardId);
+
+    let draggedItem = newBoards[boardIndex].cards[fromListIndex].items.splice(draggedItemIndex, 1);
+    newBoards[boardIndex].cards[toListIndex].items.push(draggedItem[0]);
+
+    this._postPutOrDeleteBoard('PUT', newBoards[boardIndex]);
+  }  
+
   render() {
     let mainComponent;
     if(this.state.selectedBoard === -1) {
@@ -87,7 +97,8 @@ class App extends Component {
       deleteBoard={this.deleteBoard}/>;
     } else {
       mainComponent = <BoardDetails board={this.state.boards[this.state.selectedBoard]} 
-      addList={this.addList} addItem={this.addItem} deleteBoard={this.deleteBoard} deleteList={this.deleteList}/>
+      addList={this.addList} addItem={this.addItem} deleteBoard={this.deleteBoard}
+      deleteList={this.deleteList} dnd={this.dragAndDrop}/>
     }
     
     return (
