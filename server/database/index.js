@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+let Promise = require('bluebird');
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/boards');
 
 let boardSchema = mongoose.Schema({
@@ -27,8 +28,32 @@ bObj = {
   ]
 }
 
-module.exports.Board = Board;
+module.exports.getBoardsFromDB = () => {
+  return new Promise((resolve, reject) => {
+    Board.find((err, boards) => {
+      if(err) {
+        reject(err);
+      } else {
+        resolve(boards);
+      }
+    });
+  });
+}
 
+module.exports.addBoardToDB = (board) => {
+  boardInstance = new Board(board);
+
+  return new Promise((resolve, reject) => {
+    boardInstance.save((err, board) => {
+      if(err) return reject(err);
+      resolve('Board saved');
+    });
+  });
+}
+
+module.exports.updateBoardInDB = (board, cb) => {
+  Board.findByIdAndUpdate(board._id, board, cb);
+}
 // testBoard = new Board(bObj);
 // testBoard.save((err, board) => {
 //   if(err) return console.log(err);
