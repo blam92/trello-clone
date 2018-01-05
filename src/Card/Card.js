@@ -31,7 +31,7 @@ class Card extends Component {
   }
 
   onKeyPress = (e) => {
-    if(e.key === 'Enter') {
+    if(e.key === 'Enter' && this.getNodeInput().value.length > 0) {
       this.props.addFunction(this.getNodeInput().value, this.props.index);
       this.getNodeInput().value = '';
     };
