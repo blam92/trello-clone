@@ -21,7 +21,53 @@ class App extends Component {
   }
 
   componentDidMount() {
-    var options = { method: 'GET',
+    this._getBoards();
+  }
+
+  addBoard(board) {
+    this.setState({
+      boards: this.state.boards.concat([board])
+    });
+  }
+
+  addList(boardId, cardTitle) {
+    let newCard = {title: cardTitle, items: []};
+    let newBoards = this.state.boards.slice();
+
+    let boardIndex = this._findBoardIndex(boardId);
+    newBoards[boardIndex].cards.push(newCard);
+    this.setState({
+      boards: newBoards
+    });
+  }
+
+  addItem(boardId, cardIndex, textValue) {
+    let newBoards = this.state.boards.slice();
+    let boardIndex = this._findBoardIndex(boardId);
+
+    newBoards[boardIndex].cards[cardIndex].items.push(textValue);
+    this.setState({
+      boards: newBoards,
+      selectBoard: -1
+    });
+  }
+
+  selectBoard(boardId) {
+    let boardIndex = this._findBoardIndex(boardId);
+
+    this.setState({
+      selectedBoard: boardIndex
+    });
+  }
+
+  selectHeader() {
+    this.setState({
+      selectedBoard: -1
+    });
+  }
+
+  _getBoards() {
+    const options = { method: 'GET',
                contentType: 'application/json',
                mode: 'cors',
                cache: 'default' };
@@ -36,46 +82,12 @@ class App extends Component {
     }).catch((err) => console.log('error: ', err));
   }
 
-  addBoard(board) {
-    this.setState({
-      boards: this.state.boards.concat([board])
-    });
+  _postBoard(boardId) {
+
   }
 
-  addList(boardId, cardTitle) {
-    let newCard = {title: cardTitle, items: []};
-    let newBoards = this.state.boards.slice();
-
-    let boardIndex = _.findIndex(newBoards, (board) => board.id === boardId);
-    newBoards[boardIndex].cards.push(newCard);
-    this.setState({
-      boards: newBoards
-    });
-  }
-
-  addItem(boardId, cardIndex, textValue) {
-    let newBoards = this.state.boards.slice();
-    let boardIndex = _.findIndex(newBoards, (board) => board.id === boardId);
-
-    newBoards[boardIndex].cards[cardIndex].items.push(textValue);
-    this.setState({
-      boards: newBoards,
-      selectBoard: -1
-    });
-  }
-
-  selectBoard(boardId) {
-    let boardIndex = _.findIndex(this.state.boards, (board) => board.id === boardId);
-
-    this.setState({
-      selectedBoard: boardIndex
-    });
-  }
-
-  selectHeader() {
-    this.setState({
-      selectedBoard: -1
-    });
+  _findBoardIndex = (boardId) => {
+    return _.findIndex(this.state.boards, (board) => board.id === boardId);
   }
 
   render() {
