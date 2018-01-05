@@ -2,8 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { ItemTypes } from './Constants';
-import { findDOMNode } from 'react-dom'
-import { configureDragDrop } from 'react-dnd';
+import { findDOMNode } from 'react-dom';
 
 
 const ItemSource = {
@@ -53,7 +52,7 @@ let itemTarget = {
     }
     
     props.sortDraggedItems(props.myListIndex, dragIndex, hoverIndex);
-
+    console.log('triggering!', props.index);  
     monitor.getItem().index = hoverIndex
   }
 }
